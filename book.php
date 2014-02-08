@@ -29,21 +29,27 @@ echo "</ul>";
 $category = NULL;
 if (empty($_GET['filename'])) {
     $filename = NULL;
+    echo("<p>The filename is null!</p>");
+    // and therefore you should post the front of the bookcase
 } else if($_GET['filename'] == 'rss' || $_GET['filename'] == 'atom') {
     $filename = $_GET['filename'];
+    echo("<p>It's asking for RSS!</p>");
+    // and there really souldn't be anything here, since this needs no RSS
 }  else {
     
     //Filename can be /some/blog/post-filename.md We should get the last part only
     $filename = explode('/',$_GET['filename']);
 
     // File name could be the name of a category
-    if($filename[count($filename) - 2] == "category") {
+    if($filename[count($filename) - 2] == "category") { // url.tld/category/categoryname/post
         $category = $filename[count($filename) - 1];
         $filename = null;
+        // we don't really need categories?
     } else {
       
         // Individual Post
         $filename = POSTS_DIR . $filename[count($filename) - 1] . FILE_EXT;
+        // 
     }
 }
 ?>
