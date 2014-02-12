@@ -4,17 +4,13 @@
     </head>
     <body>
 <?php
-echo("<p>" . $_REQUEST['b'] . "</p>");
-echo($_REQUEST);
-if($_REQUEST["b"] === "") echo "b is an empty string\n";
-if($_REQUEST["b"] === false) echo "b is false\n";
-if($_REQUEST["b"] === null) echo "b is null\n";
-if(isset($_REQUEST["b"])) echo "b is set\n";
-if(!empty($_REQUEST["b"])) echo "b is not empty";
+echo('<p>$_REQUEST is ' . $_REQUEST['b'] . "</p><hr>"); // what's 'b'?
+if($_REQUEST["b"] === "") echo "<p>b is an empty string\n</p>";
+if($_REQUEST["b"] === false) echo "<p>b is false\n</p>";
+if($_REQUEST["b"] === null) echo "<p>b is null\n</p>";
+if(isset($_REQUEST["b"])) echo "<p>b is set\n</p>";
+if(!empty($_REQUEST["b"])) echo "<p>b is not empty</p>";
 
-//if($_REQUEST['b'] in glob("./books/*.md" as $b)) { // this sint' working
-//    include $b;
-//}
 echo "<ul>";
 foreach(glob("./books/*.md") as $b){
     echo "<li>".$b."</li>\n";
@@ -28,7 +24,7 @@ echo "</ul>";
 //
 
 include("settings.php");
-include("./plugins/markdown.php")
+include("./plugins/markdown.php");
 
 define('BOOKS_DIR', $books_dir);
 define('FILE_EXT', '.md');
@@ -51,11 +47,12 @@ if (empty($_GET['b'])) {
     } else {
         // Individual Post
         $filename = BOOKS_DIR . $filename[count($filename) - 1] . FILE_EXT;
+        echo("<p>". $filename[count($filename) - 1] ."</p>");
         echo("<p>The post filename is ".$filename."</p>");
-        /*
+        
         if (!file_exists($filename)) {
             echo "<h1>404</h1>";
-        } else {
+        }/*else {
             $content = Markdown($filename); //for the template
             echo $content;
         }
