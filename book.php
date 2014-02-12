@@ -4,12 +4,14 @@
     </head>
     <body>
 <?php
-echo('<p>$_REQUEST is ' . $_REQUEST['b'] . "</p><hr>"); // what's 'b'?
-if($_REQUEST["b"] === "") echo "<p>b is an empty string\n</p>";
-if($_REQUEST["b"] === false) echo "<p>b is false\n</p>";
-if($_REQUEST["b"] === null) echo "<p>b is null\n</p>";
-if(isset($_REQUEST["b"])) echo "<p>b is set\n</p>";
-if(!empty($_REQUEST["b"])) echo "<p>b is not empty</p>";
+$request_b .= $_REQUEST['b'] ;
+
+echo('<p>$request_b is ' . $request_b . "</p><hr>"); // what's 'b'?
+if($request_b === "") echo "<p>b is an empty string\n</p>";
+if($request_b === false) echo "<p>b is false\n</p>";
+if($request_b === null) echo "<p>b is null\n</p>";
+if(isset($request_b)) echo "<p>b is set\n</p>";
+if(!empty($request_b)) echo "<p>b is not empty</p>";
 
 echo "<ul>";
 foreach(glob("./books/*.md") as $b){
@@ -30,33 +32,43 @@ define('BOOKS_DIR', $books_dir);
 define('FILE_EXT', '.md');
 
 $collection = NULL;
-if (empty($_GET['b'])) {
+if ($request_b === "") {
     $filename = NULL;
     echo("<p>The filename is null!</p>");
     // and therefore you should post the front of the bookcase
 } else {
     
-    //Filename can be /some/blog/post-filename.md We should get the last part only
-    $filename = explode('/',$_GET['b']);
+    /* This portion borrows from Dropplets' pretty-permalinks processing logic.
+     * Bits of it won't make sense unless pretty permalinks are implemented, like the whole collection logic loop. 
+     *
+    $filename = explode('/',$request_b);
     // File name could be the name of a collection
-    if($filename[count($filename) - 2] == "collection") { // url.tld/collection/collectionname/post
+    if($filename[count($filename) - 2] == "collection") {
+        /*
+         * url.tld/collection/collectionname/post if using pretty permalinks from dropplets
+         * otherwise, this means nothing at all and I should feel bad, or find another way of doing collection URLs
+         * this will not work until collections are implemented
+         * good thing no one will link to a collection
+         */
         $collection = $filename[count($filename) - 1];
         $filename = null;
         // Collections of books, based on tagging!
         echo("<p>The collection of books to be displayed is ". $collection ."</p>");
     } else {
-        // Individual Post
+        /*
+         * Individual Post
+         * where books/bookfilename.md has the url /bookfilename
+         */        
         $filename = BOOKS_DIR . $filename[count($filename) - 1] . FILE_EXT;
         echo("<p>". $filename[count($filename) - 1] ."</p>");
         echo("<p>The post filename is ".$filename."</p>");
         
         if (!file_exists($filename)) {
-            echo "<h1>404</h1>";
-        }/*else {
-            $content = Markdown($filename); //for the template
+            echo "<h1>404</h1>\n<p></p>";
+        } else {
+            $content = Markdown(file_get_contents($filename)); //for the template
             echo $content;
         }
-        */
         
         // 
     }
