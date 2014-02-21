@@ -46,6 +46,6 @@ Stuff for templates:
 
 Other variables:
 
-- $filename - used in `book.php` to reference the file in `$books_dir` to be converted to HTML from Markdown
+- $filename - used in `bookcase.php` to reference the file in `$books_dir` to be converted to HTML from Markdown
 
 Apache logs are generally in /var/log/
