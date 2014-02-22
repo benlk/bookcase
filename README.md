@@ -20,6 +20,7 @@ It's a custom CMS written for foodreportingsyllabus.com, to handle the Bookcase.
         - bonus?
         - category (ies?) (would use explode() in case of multiple categories?)
 - Front page `index.md` goes in `books/`
+
 - Templates go in `templates/` in PHP. The following files are required:
     - `index.php` - the index or front page of your site
     - `book.php` - used to display a single book
@@ -49,3 +50,7 @@ Other variables:
 - $filename - used in `bookcase.php` to reference the file in `$books_dir` to be converted to HTML from Markdown
 
 Apache logs are generally in /var/log/
+
+# License
+
+Bookcase CMS is licensed under the [GNU GPL, Version 3](http://www.gnu.org/licenses/gpl-3.0.html) or later versions of the license. You are afforded certain rights under this license. 
